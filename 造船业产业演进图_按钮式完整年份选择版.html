@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>造船业上下游产业关联演进分析</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        h2 {
+            color: #2c3e50;
+            font-size: 18px;
+            text-align: center;
+        }
+        .year-selector {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .year-btn {
+            background-color: #ecf0f1;
+            border: none;
+            padding: 8px 16px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .year-btn.active {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .left {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .chart-box {
+            height: 400px;
+        }
+        #sankey {
+            height: 820px;
+        }
+    </style>
+</head>
+<body>
+    <h1>造船业上下游产业关联演进分析</h1>
+    <p style="text-align: center;">动态展示2002-2020年间造船业与上下游产业的价值流动与结构变化，揭示产业关联演变趋势</p>
+
+    <div class="year-selector"><button onclick="updateCharts('2002')" class="year-btn" id="btn2002">2002年</button><button onclick="updateCharts('2007')" class="year-btn" id="btn2007">2007年</button><button onclick="updateCharts('2012')" class="year-btn" id="btn2012">2012年</button><button onclick="updateCharts('2017')" class="year-btn" id="btn2017">2017年</button><button onclick="updateCharts('2018')" class="year-btn" id="btn2018">2018年</button><button onclick="updateCharts('2020')" class="year-btn" id="btn2020">2020年</button></div>
+
+    <div class="container">
+        <div class="left">
+            <div id="sankey" class="chart-box"></div>
+        </div>
+        <div class="right">
+            <div>
+                <h2>上游产业占比</h2>
+                <div id="upstream" class="chart-box"></div>
+            </div>
+            <div>
+                <h2>下游产业占比</h2>
+                <div id="downstream" class="chart-box"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dataByYear = {"2002": {"sankey": {"data": [{"type": "sankey", "domain": {"x": [0, 1], "y": [0, 1]}, "node": {"pad": 15, "thickness": 20, "label": ["船舶及浮动装置制造业", "装备制造与机械设备", "基础原材料与能源工业", "电气电子与仪器制造", "服务业与其他", "化工与材料加工", "水上运输业", "出口", "渔业"], "color": ["#1f77b4", "#2ca02c", "#17becf", "#636efa", "#1c9099", "#66c2a5", "#3288bd", "#5e4fa2", "#4daf4a"]}, "link": {"source": [0, 0, 0, 0, 1, 2, 3, 4, 5], "target": [6, 7, 8, 0, 0, 0, 0, 0, 0], "value": [2510797, 1524556, 741100, 464550, 1239947, 1074778, 493156, 357267, 290118], "color": ["#1f77b4", "#1f77b4", "#1f77b4", "#1f77b4", "#2ca02c", "#17becf", "#636efa", "#1c9099", "#66c2a5"]}}]}, "upstream": {"data": [{"type": "pie", "labels": ["化工与材料加工", "基础原材料与能源工业", "服务业与其他", "电气电子与仪器制造", "船舶及浮动装置制造业", "装备制造与机械设备"], "values": [290118, 1074778, 357267, 493156, 464550, 1239947], "hole": 0.4}]}, "downstream": {"data": [{"type": "pie", "labels": ["出口", "水上运输业", "渔业", "船舶及浮动装置制造业"], "values": [1524556, 2510797, 741100, 464550], "hole": 0.4}]}}, "2007": {"sankey": {"data": [{"type": "sankey", "domain": {"x": [0, 1], "y": [0, 1]}, "node": {"pad": 15, "thickness": 20, "label": ["船舶及浮动装置制造业", "基础原材料与能源工业", "电气电子与仪器制造", "装备制造与机械设备", "服务业与其他", "化工与材料加工", "汽车与交通相关", "出口", "水上运输业", "渔业"], "color": ["#1f77b4", "#2ca02c", "#17becf", "#636efa", "#1c9099", "#66c2a5", "#3288bd", "#5e4fa2", "#4daf4a", "#377eb8"]}, "link": {"source": [0, 0, 0, 0, 1, 2, 3, 4, 5, 6], "target": [7, 8, 0, 9, 0, 0, 0, 0, 0, 0], "value": [8792300, 4529141, 3286994, 1087882, 4857624, 3941530, 3708523, 1523069, 1016752, 368061], "color": ["#1f77b4", "#1f77b4", "#1f77b4", "#1f77b4", "#2ca02c", "#17becf", "#636efa", "#1c9099", "#66c2a5", "#3288bd"]}}]}, "upstream": {"data": [{"type": "pie", "labels": ["化工与材料加工", "基础原材料与能源工业", "服务业与其他", "汽车与交通相关", "电气电子与仪器制造", "船舶及浮动装置制造业", "装备制造与机械设备"], "values": [1016752, 4857624, 1523069, 368061, 3941530, 3286994, 3708523], "hole": 0.4}]}, "downstream": {"data": [{"type": "pie", "labels": ["出口", "水上运输业", "渔业", "船舶及浮动装置制造业"], "values": [8792300, 4529141, 1087882, 3286994], "hole": 0.4}]}}, "2012": {"sankey": {"data": [{"type": "sankey", "domain": {"x": [0, 1], "y": [0, 1]}, "node": {"pad": 15, "thickness": 20, "label": ["船舶及相关装置", "电气电子与仪器制造", "基础原材料与能源工业", "装备制造与机械设备", "服务业与其他", "化工与材料加工", "汽车与交通相关", "出口", "水上运输业", "渔产品", "金属制品、机械和设备修理服务"], "color": ["#1f77b4", "#2ca02c", "#17becf", "#636efa", "#1c9099", "#66c2a5", "#3288bd", "#5e4fa2", "#4daf4a", "#377eb8", "#1f77b4"]}, "link": {"source": [0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6], "target": [7, 0, 8, 9, 10, 0, 0, 0, 0, 0, 0], "value": [22528696, 6656317, 3575955, 510776, 324001, 9218674, 9218299, 7254729, 5861248, 3294965, 536378], "color": ["#1f77b4", "#1f77b4", "#1f77b4", "#1f77b4", "#1f77b4", "#2ca02c", "#17becf", "#636efa", "#1c9099", "#66c2a5", "#3288bd"]}}]}, "upstream": {"data": [{"type": "pie", "labels": ["化工与材料加工", "基础原材料与能源工业", "服务业与其他", "汽车与交通相关", "电气电子与仪器制造", "船舶及相关装置", "装备制造与机械设备"], "values": [3294965, 9218299, 5861248, 536378, 9218674, 6656317, 7254729], "hole": 0.4}]}, "downstream": {"data": [{"type": "pie", "labels": ["出口", "水上运输业", "渔产品", "船舶及相关装置", "金属制品、机械和设备修理服务"], "values": [22528696, 3575955, 510776, 6656317, 324001], "hole": 0.4}]}}, "2017": {"sankey": {"data": [{"type": "sankey", "domain": {"x": [0, 1], "y": [0, 1]}, "node": {"pad": 15, "thickness": 20, "label": ["船舶及相关装置", "电气电子与仪器制造", "装备制造与机械设备", "服务业与其他", "基础原材料与能源工业", "化工与材料加工", "汽车与交通相关", "出口", "水上货物运输和运输辅助活动", "采矿、冶金、建筑专用设备", "渔产品"], "color": ["#1f77b4", "#2ca02c", "#17becf", "#636efa", "#1c9099", "#66c2a5", "#3288bd", "#5e4fa2", "#4daf4a", "#377eb8", "#1f77b4"]}, "link": {"source": [0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6], "target": [7, 0, 8, 9, 10, 0, 0, 0, 0, 0, 0], "value": [13963566, 6236724, 3653904, 1606811, 621885, 8831031, 6838124, 5777425, 5516883, 3324993, 710457], "color": ["#1f77b4", "#1f77b4", "#1f77b4", "#1f77b4", "#1f77b4", "#2ca02c", "#17becf", "#636efa", "#1c9099", "#66c2a5", "#3288bd"]}}]}, "upstream": {"data": [{"type": "pie", "labels": ["化工与材料加工", "基础原材料与能源工业", "服务业与其他", "汽车与交通相关", "电气电子与仪器制造", "船舶及相关装置", "装备制造与机械设备"], "values": [3324993, 5516883, 5777425, 710457, 8831031, 6236724, 6838124], "hole": 0.4}]}, "downstream": {"data": [{"type": "pie", "labels": ["出口", "水上货物运输和运输辅助活动", "渔产品", "船舶及相关装置", "采矿、冶金、建筑专用设备"], "values": [13963566, 3653904, 621885, 6236724, 1606811], "hole": 0.4}]}}, "2018": {"sankey": {"data": [{"type": "sankey", "domain": {"x": [0, 1], "y": [0, 1]}, "node": {"pad": 15, "thickness": 20, "label": ["船舶及相关装置", "电气电子与仪器制造", "装备制造与机械设备", "基础原材料与能源工业", "服务业与其他", "化工与材料加工", "汽车与交通相关", "出口", "水上货物运输和运输辅助活动", "采矿、冶金、建筑专用设备", "渔产品", "金属制品、机械和设备修理服务"], "color": ["#1f77b4", "#2ca02c", "#17becf", "#636efa", "#1c9099", "#66c2a5", "#3288bd", "#5e4fa2", "#4daf4a", "#377eb8", "#1f77b4", "#2ca02c"]}, "link": {"source": [0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6], "target": [7, 0, 8, 9, 10, 11, 0, 0, 0, 0, 0, 0], "value": [14552143, 5095745, 3715765, 1352721, 636883, 543791, 7195748, 5244073, 4782151, 4646925, 2624869, 432431], "color": ["#1f77b4", "#1f77b4", "#1f77b4", "#1f77b4", "#1f77b4", "#1f77b4", "#2ca02c", "#17becf", "#636efa", "#1c9099", "#66c2a5", "#3288bd"]}}]}, "upstream": {"data": [{"type": "pie", "labels": ["化工与材料加工", "基础原材料与能源工业", "服务业与其他", "汽车与交通相关", "电气电子与仪器制造", "船舶及相关装置", "装备制造与机械设备"], "values": [2624869, 4782151, 4646925, 432431, 7195748, 5095745, 5244073], "hole": 0.4}]}, "downstream": {"data": [{"type": "pie", "labels": ["出口", "水上货物运输和运输辅助活动", "渔产品", "船舶及相关装置", "采矿、冶金、建筑专用设备", "金属制品、机械和设备修理服务"], "values": [14552143, 3715765, 636883, 5095745, 1352721, 543791], "hole": 0.4}]}}, "2020": {"sankey": {"data": [{"type": "sankey", "domain": {"x": [0, 1], "y": [0, 1]}, "node": {"pad": 15, "thickness": 20, "label": ["船舶及相关装置", "电气电子与仪器制造", "装备制造与机械设备", "服务业与其他", "基础原材料与能源工业", "化工与材料加工", "汽车与交通相关", "出口", "水上货物运输和运输辅助活动", "采矿、冶金、建筑专用设备", "渔产品", "金属制品、机械和设备修理服务"], "color": ["#1f77b4", "#2ca02c", "#17becf", "#636efa", "#1c9099", "#66c2a5", "#3288bd", "#5e4fa2", "#4daf4a", "#377eb8", "#1f77b4", "#2ca02c"]}, "link": {"source": [0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6], "target": [7, 8, 0, 9, 10, 11, 0, 0, 0, 0, 0, 0], "value": [13194614, 4550661, 4222878, 1440980, 653482, 536243, 5649781, 4300444, 3981834, 3751893, 1952450, 252885], "color": ["#1f77b4", "#1f77b4", "#1f77b4", "#1f77b4", "#1f77b4", "#1f77b4", "#2ca02c", "#17becf", "#636efa", "#1c9099", "#66c2a5", "#3288bd"]}}]}, "upstream": {"data": [{"type": "pie", "labels": ["化工与材料加工", "基础原材料与能源工业", "服务业与其他", "汽车与交通相关", "电气电子与仪器制造", "船舶及相关装置", "装备制造与机械设备"], "values": [1952450, 3751893, 3981834, 252885, 5649781, 4222878, 4300444], "hole": 0.4}]}, "downstream": {"data": [{"type": "pie", "labels": ["出口", "水上货物运输和运输辅助活动", "渔产品", "船舶及相关装置", "采矿、冶金、建筑专用设备", "金属制品、机械和设备修理服务"], "values": [13194614, 4550661, 653482, 4222878, 1440980, 536243], "hole": 0.4}]}}};
+        const sankeyDiv = document.getElementById('sankey');
+        const upstreamDiv = document.getElementById('upstream');
+        const downstreamDiv = document.getElementById('downstream');
+
+        function updateCharts(year) {
+            // 激活按钮样式
+            document.querySelectorAll('.year-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById('btn' + year);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            Plotly.react(sankeyDiv, dataByYear[year].sankey.data, {
+                margin: {t: 10, b: 10},
+                height: 820
+            });
+            Plotly.react(upstreamDiv, dataByYear[year].upstream.data, {
+                margin: {t: 10, b: 10},
+                height: 400
+            });
+            Plotly.react(downstreamDiv, dataByYear[year].downstream.data, {
+                margin: {t: 10, b: 10},
+                height: 400
+            });
+        }
+
+        // 初始化显示最新一年
+        updateCharts("2020");
+    </script>
+</body>
+</html>
